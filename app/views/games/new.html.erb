@@ -1,12 +1,21 @@
 <h1>New game</h1>
 <div id="grid" class="d-flex flex-row mt-4">
-<% @letters.each do |letter| %>
-  <div class="letter"><%= letter.capitalize %></div>
-<% end%>
+  <% @letters.each do |letter| %>
+    <div class="letter"><%= letter.capitalize %></div>
+  <% end%>
 </div>
 
-<form class="mt-4" action="/score" method="post" data-turbo="false">
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <input type="text" name="word" placeholder="type a word">
-  <input type="submit">
-</form>
+<div id="game-form">
+  <form action="/score" method="POST" data-controller="game" data-action="submit->game#checkWord">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag :letters, @letters %>
+    <div class="input-group">
+      <input type="text" name="word" class="form-control">
+      <input type="submit" value="Play" class="btn btn-primary">
+    </div>
+  </form>
+</div>
+
+<div id="result" class="mt-4">
+  <%# Le résultat sera affiché ici %>
+</div>
